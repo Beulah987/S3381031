@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539781583233",
+    "project_id": "airtrack-ac9aa",
+    "storage_bucket": "airtrack-ac9aa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539781583233:android:5fb9ce5c4dd26628621880",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.mad.airtrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWzvx3jbL1DixAwAPgy6FP3PLcfmh8VyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
