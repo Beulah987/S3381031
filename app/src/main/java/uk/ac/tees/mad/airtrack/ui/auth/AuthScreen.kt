@@ -169,7 +169,7 @@ fun AuthScreen(
                         Icon(imageVector = Icons.Default.Email, contentDescription = null)
                     },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
+                        keyboardType = KeyboardType. Email,
                         imeAction = ImeAction.Next
                     )
                 )

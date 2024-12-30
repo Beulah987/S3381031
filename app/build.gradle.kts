@@ -52,6 +52,13 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("com.google.accompanist:accompanist-permissions:0.31.2-alpha")
 
+
+    //Google Fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.7.5")
+
+    //Glide library
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

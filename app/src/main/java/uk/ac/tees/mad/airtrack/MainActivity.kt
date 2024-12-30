@@ -23,6 +23,7 @@ import uk.ac.tees.mad.airtrack.ui.auth.AuthViewmodel
 import uk.ac.tees.mad.airtrack.ui.theme.AirTrackTheme
 import uk.ac.tees.mad.airtrack.ui.SplashScreen
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
