@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,12 +41,14 @@ fun ProfileScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Spacer(modifier = modifier.height(75.dp))
+        Spacer(modifier = modifier.weight(2F))
         Text(
             text = "Profile Screen",
             fontSize = 20.sp,
             fontFamily = poppinsFamily
         )
+
+        Spacer(modifier = modifier.weight(1F))
 
         GlideImage(
             modifier = modifier
@@ -61,6 +65,50 @@ fun ProfileScreen(
             failure = placeholder(R.drawable.avatar),
             contentDescription = "Profile Picture"
         )
+
+        Spacer(modifier = modifier.weight(1F))
+
+        Text(
+            text = "Account Details",
+            fontSize = 17.sp,
+            fontFamily = poppinsFamily
+        )
+
+        Spacer(modifier = modifier.weight(1F))
+
+        Text(
+            text = "Name: Anubhav Singh",
+            fontFamily = poppinsFamily,
+            fontSize = 17.sp
+        )
+
+        HorizontalDivider(modifier = modifier.fillMaxWidth(0.85f))
+
+        Text(
+            text = "Email: test@gmail.com",
+            fontFamily = poppinsFamily,
+            fontSize = 17.sp
+        )
+
+        HorizontalDivider(modifier = modifier.fillMaxWidth(0.85f))
+
+        Text(
+            text = "Location: Lucknow,Uttar Pradesh",
+            fontFamily = poppinsFamily,
+            fontSize = 17.sp
+        )
+
+        HorizontalDivider(modifier = modifier.fillMaxWidth(0.85f))
+
+        Text(
+            text = "Name Anubhav Singh",
+            fontFamily = poppinsFamily,
+            fontSize = 17.sp
+        )
+
+        HorizontalDivider(modifier = modifier.fillMaxWidth(0.85f))
+
+        Spacer(modifier = modifier.weight(10F))
 
     }
 }
