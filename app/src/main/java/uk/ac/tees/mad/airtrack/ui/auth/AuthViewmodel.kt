@@ -100,8 +100,8 @@ class AuthViewmodel : ViewModel() {
                     email = it.getString("email"),
                     location = it.getString("location"),
                     profileUrl = it.getString("profileUrl"),
-                    latitude = it.getString("latitude"),
-                    longitude = it.getString("longitude")
+                    latitude = it.getDouble("latitude"),
+                    longitude = it.getDouble("longitude")
                 )
 
                 _currentUser.value = userInfo

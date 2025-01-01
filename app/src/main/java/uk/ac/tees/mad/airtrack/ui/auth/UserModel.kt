@@ -6,6 +6,6 @@ data class UserModel(
     val email: String? = "",
     val location: String? = "",
     val profileUrl: String? = "",
-    val latitude: String? = "",
-    val longitude: String? = ""
+    val latitude: Double? = 0.0,
+    val longitude: Double? = 0.0
 )

@@ -15,6 +15,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +40,9 @@ fun ProfileScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+
+    val currentUser by authViewmodel.currentUser.collectAsState()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -67,7 +72,7 @@ fun ProfileScreen(
                     )
                 .padding(1.dp)
                 .clip(CircleShape),
-            model = "",
+            model = currentUser?.profileUrl,
             failure = placeholder(R.drawable.avatar),
             contentDescription = "Profile Picture"
         )
@@ -85,7 +90,7 @@ fun ProfileScreen(
         Spacer(modifier = modifier.weight(1F))
 
         Text(
-            text = "Name: Anubhav Singh",
+            text = "Name: ${currentUser?.name}",
             fontFamily = poppinsFamily,
             fontSize = 18.sp,
             color = Color.Black
@@ -97,7 +102,7 @@ fun ProfileScreen(
         )
 
         Text(
-            text = "Email: test@gmail.com",
+            text = "Email: ${currentUser?.email}",
             fontFamily = poppinsFamily,
             fontSize = 18.sp,
             color = Color.Black
@@ -109,7 +114,7 @@ fun ProfileScreen(
         )
 
         Text(
-            text = "Location: Lucknow,Uttar Pradesh",
+            text = "Location: ${currentUser?.location}",
             fontFamily = poppinsFamily,
             fontSize = 18.sp,
             color = Color.Black
