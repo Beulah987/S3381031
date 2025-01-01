@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +21,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import uk.ac.tees.mad.airtrack.R
+import uk.ac.tees.mad.airtrack.ui.auth.AuthViewmodel
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    authViewmodel: AuthViewmodel,
+    navController: NavController
+) {
+
+    val userExist by authViewmodel.userExist.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,8 +56,14 @@ fun SplashScreen(navController: NavController) {
     }
     LaunchedEffect(Unit) {
         delay(2000)
-        navController.navigate("auth") {
-            popUpTo("splash") { inclusive = true }
+        if (userExist){
+            navController.navigate("home") {
+                popUpTo("splash") { inclusive = true }
+            }
+        }else{
+            navController.navigate("auth") {
+                popUpTo("splash") { inclusive = true }
+            }
         }
     }
 }

@@ -5,19 +5,16 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
+import uk.ac.tees.mad.airtrack.ui.ProfileScreen
 import uk.ac.tees.mad.airtrack.ui.auth.AuthScreen
 import uk.ac.tees.mad.airtrack.ui.auth.AuthViewmodel
 import uk.ac.tees.mad.airtrack.ui.theme.AirTrackTheme
@@ -25,6 +22,9 @@ import uk.ac.tees.mad.airtrack.ui.SplashScreen
 
 
 class MainActivity : ComponentActivity() {
+
+    private val authViewModel by viewModels<AuthViewmodel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("splash") {
-                            SplashScreen(navController)
+                            SplashScreen(authViewmodel = authViewmodel, navController = navController)
                         }
                         composable("auth") {
                             AuthScreen(
@@ -88,14 +88,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable("home") {
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                Button(onClick = {
-                                    Firebase.auth.signOut()
-                                    navController.navigate("auth")
-                                }) {
-                                    Text("LOGOUT")
-                                }
-                            }
+                            ProfileScreen(authViewmodel = authViewmodel, navController = navController)
                         }
                     }
                 }
