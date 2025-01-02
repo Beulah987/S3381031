@@ -1,16 +1,20 @@
 package uk.ac.tees.mad.airtrack.ui.auth
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class AuthViewmodel : ViewModel() {
 
     val auth = FirebaseAuth.getInstance()
     val firestore = FirebaseFirestore.getInstance()
+    val storage =
 
     private val _userExist = MutableStateFlow(false)
     val userExist = _userExist.asStateFlow()
@@ -117,4 +121,62 @@ class AuthViewmodel : ViewModel() {
         _userExist.value = false
         _currentUser.value = null
     }
+
+    fun updateUserInformation(userInfo: UserInfo){
+        viewModelScope.launch {
+            val currUser = auth.currentUser
+            if (currUser!=null){
+                val userId = currUser.uid
+                val updatedUser = UserInfo(
+                    name = userInfo.name,
+                    email = userInfo.email,
+                    highestQualification = userInfo.highestQualification,
+                    profilePictureUrl = userInfo.profilePictureUrl,
+                )
+
+                firestore.collection("users")
+                    .document(userId)
+                    .set(updatedUser)
+                    .addOnSuccessListener {
+                        fetchCurrentUser()
+                        Log.i("The User update: ", "User updated successfully!")
+                    }
+                    .addOnFailureListener{
+                        Log.i("The User update: ", "User is not updated successfully.")
+                    }
+
+            }
+        }
+    }
+
+    fun updateProfileImage(uri: Uri){
+        val currentUser = auth.currentUser
+        if (currentUser!=null){
+            val userId = currentUser.uid
+            val imageRef = storage.reference.child("users/${userId}/profile.jpg")
+
+            imageRef.putFile(uri)
+                .addOnSuccessListener {
+                    imageRef.downloadUrl.addOnSuccessListener {
+                        val imageLink = it.toString()
+
+                        val userData = hashMapOf(
+                            "profilePicture" to imageLink)
+                        firestore.collection("users")
+                            .document(userId)
+                            .update(userData as Map<String, Any>)
+                            .addOnSuccessListener {
+                                fetchCurrentUser()
+                            }
+                        Log.i("The profile picture: ", "The picture is updated successfully.")
+                    }
+                }
+                .addOnFailureListener{
+                    Log.i("Error Encountered: ", "Unable to update the profile picture. ${it}")
+                }
+        }else{
+            Log.i("Error update:", "Current User is null")
+        }
+    }
+
 }
