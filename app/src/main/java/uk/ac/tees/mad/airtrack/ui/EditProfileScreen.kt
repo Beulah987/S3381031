@@ -61,6 +61,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
 
+
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun EditProfileScreen(
@@ -68,8 +69,7 @@ fun EditProfileScreen(
     authViewmodel: AuthViewmodel,
     modifier: Modifier = Modifier
 ) {
-
-
+    
     val context = LocalContext.current
 
     val currentUser by authViewmodel.currentUser.collectAsState()
@@ -81,7 +81,7 @@ fun EditProfileScreen(
         contract = ActivityResultContracts.GetContent()
     ) {uri: Uri? ->
         uri?.let {
-
+            authViewmodel.updateProfileImage(uri)
         }
     }
 
@@ -90,7 +90,7 @@ fun EditProfileScreen(
         contract = ActivityResultContracts.TakePicturePreview()
     ) { bitmap: Bitmap? ->
         bitmap?.let {
-
+            authViewmodel.updateProfileImage(bitmapToUri(context, bitmap))
         }
     }
 
@@ -141,27 +141,28 @@ fun EditProfileScreen(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color(0xFF47A9F4)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
-                .background(Color(0xFF9EB1F4)),
+                .background(Color(0xFF47A9F4)),
             contentAlignment = Alignment.BottomCenter
         ) {
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = modifier.height(70.dp))
             Box(
-                modifier = Modifier
+                modifier = modifier
                     .size(300.dp)
                     .background(Color.White, CircleShape)
                     .padding(3.dp)
             ) {
                 GlideImage(
-                    modifier = Modifier
+                    modifier = modifier
                         .height(300.dp)
                         .aspectRatio(1f, matchHeightConstraintsFirst = true)
                         .border(
@@ -178,7 +179,7 @@ fun EditProfileScreen(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
 
         Button(
             colors = ButtonDefaults.buttonColors(
@@ -197,7 +198,7 @@ fun EditProfileScreen(
             )
         }
 
-        Spacer(modifier = Modifier.weight(1F))
+        Spacer(modifier = modifier.weight(1F))
 
         Text(
             text = "Edit Account Details",
@@ -206,10 +207,10 @@ fun EditProfileScreen(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
 
         Text(
-            modifier = Modifier.fillMaxWidth(0.85f),
+            modifier = modifier.fillMaxWidth(0.85f),
             text = "Name",
             fontFamily = poppinsFamily,
             fontSize = 18.sp
@@ -222,7 +223,7 @@ fun EditProfileScreen(
                 onValueChange = {
                     updatedName = it
                 },
-                modifier = Modifier.fillMaxWidth(0.88f),
+                modifier = modifier.fillMaxWidth(0.88f),
                 shape = RoundedCornerShape(15.dp),
                 trailingIcon = {
                     Icon(
@@ -233,7 +234,7 @@ fun EditProfileScreen(
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
 
         Button(
             colors = ButtonDefaults.buttonColors(
@@ -251,7 +252,7 @@ fun EditProfileScreen(
                         latitude = currentUser?.latitude,
                         longitude = currentUser?.longitude
                     )
-
+                    authViewmodel.updateUserInformation(userInfo = user)
                 }
                 navController.popBackStack()
             }
@@ -263,7 +264,7 @@ fun EditProfileScreen(
             )
         }
 
-        Spacer(modifier = Modifier.weight(10f))
+        Spacer(modifier = modifier.weight(10f))
 
     }
 }

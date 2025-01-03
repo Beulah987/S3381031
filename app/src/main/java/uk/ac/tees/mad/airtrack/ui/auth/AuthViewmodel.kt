@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ class AuthViewmodel : ViewModel() {
 
     val auth = FirebaseAuth.getInstance()
     val firestore = FirebaseFirestore.getInstance()
-    val storage =
+    val storage = FirebaseStorage.getInstance()
 
     private val _userExist = MutableStateFlow(false)
     val userExist = _userExist.asStateFlow()
@@ -122,16 +123,18 @@ class AuthViewmodel : ViewModel() {
         _currentUser.value = null
     }
 
-    fun updateUserInformation(userInfo: UserInfo){
+    fun updateUserInformation(userInfo: UserModel){
         viewModelScope.launch {
             val currUser = auth.currentUser
             if (currUser!=null){
                 val userId = currUser.uid
-                val updatedUser = UserInfo(
+                val updatedUser = UserModel(
                     name = userInfo.name,
                     email = userInfo.email,
-                    highestQualification = userInfo.highestQualification,
-                    profilePictureUrl = userInfo.profilePictureUrl,
+                    location = userInfo.location,
+                    profileUrl = userInfo.profileUrl,
+                    latitude = userInfo.latitude,
+                    longitude = userInfo.longitude
                 )
 
                 firestore.collection("users")

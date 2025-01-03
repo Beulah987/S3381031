@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import uk.ac.tees.mad.airtrack.ui.EditProfileScreen
 import uk.ac.tees.mad.airtrack.ui.ProfileScreen
 import uk.ac.tees.mad.airtrack.ui.auth.AuthScreen
 import uk.ac.tees.mad.airtrack.ui.auth.AuthViewmodel
@@ -89,6 +90,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("home") {
                             ProfileScreen(authViewmodel = authViewmodel, navController = navController)
+                        }
+                        composable("edit_profile") {
+                            EditProfileScreen(navController, authViewmodel)
                         }
                     }
                 }
