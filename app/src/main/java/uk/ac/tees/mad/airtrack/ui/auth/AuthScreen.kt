@@ -282,14 +282,18 @@ fun AuthScreen(
 
                 Button(
                     onClick = {
-                        onSignup(
-                            email,
-                            password,
-                            name,
-                            location,
-                            latitude,
-                            longitude
-                        )
+                        if (location.isNotEmpty()){
+                            onSignup(
+                                email,
+                                password,
+                                name,
+                                location,
+                                latitude,
+                                longitude
+                            )
+                        }else{
+                            Toast.makeText(context, "Please turn on Location!!", Toast.LENGTH_SHORT).show()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -418,7 +422,7 @@ suspend fun getLocation(
             1
         )
         if (addresses != null && addresses.isNotEmpty()) {
-            setLocation("${addresses[0].subAdminArea}, ${addresses[0].locality}, ${addresses[0].adminArea}, ${addresses[0].countryName}")
+            setLocation("${addresses[0].locality}, ${addresses[0].adminArea}, ${addresses[0].countryName}")
         } else {
             Toast.makeText(context, "Error getting location", Toast.LENGTH_SHORT).show()
         }
