@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.google.gson.Gson
+import uk.ac.tees.mad.airtrack.ui.DetailsScreen
 import uk.ac.tees.mad.airtrack.ui.EditProfileScreen
 import uk.ac.tees.mad.airtrack.ui.HomeScreen
 import uk.ac.tees.mad.airtrack.ui.ProfileScreen
@@ -21,11 +25,13 @@ import uk.ac.tees.mad.airtrack.ui.auth.AuthScreen
 import uk.ac.tees.mad.airtrack.ui.auth.AuthViewmodel
 import uk.ac.tees.mad.airtrack.ui.theme.AirTrackTheme
 import uk.ac.tees.mad.airtrack.ui.SplashScreen
+import uk.ac.tees.mad.airtrack.ui.mainapp.MainViewModel
+import uk.ac.tees.mad.airtrack.ui.mainapp.model.AirQuality
 
 
 class MainActivity : ComponentActivity() {
 
-    private val authViewModel by viewModels<AuthViewmodel>()
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,13 +96,25 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable("home") {
-                            HomeScreen(navController)
+                            HomeScreen(navController, mainViewModel)
                         }
                         composable("profile_screen"){
                             ProfileScreen(authViewmodel = authViewmodel, navController = navController)
                         }
                         composable("edit_profile") {
                             EditProfileScreen(navController, authViewmodel)
+                        }
+                        composable("details_screen/{airQuality}",
+                            arguments = listOf(
+                                navArgument("airQuality"){
+                                    type= NavType.StringType
+                                }
+                            )
+                        ) {backStack->
+                            val airQualityJson = backStack.arguments?.getString("airQuality")
+                            val airQuality = Gson().fromJson(airQualityJson, AirQuality::class.java)
+
+                            DetailsScreen(airQuality)
                         }
                     }
                 }

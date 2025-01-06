@@ -1,0 +1,94 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "49fe99f33cbdc7a7533f14152bc73d72",
+    "entities": [
+      {
+        "tableName": "AirQualityEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `temp_c` REAL NOT NULL, `wind_kph` REAL NOT NULL, `co` REAL NOT NULL, `gb_defra_index` INTEGER NOT NULL, `no2` REAL NOT NULL, `o3` REAL NOT NULL, `pm10` REAL NOT NULL, `pm2_5` REAL NOT NULL, `so2` REAL NOT NULL, `us_epa_index` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "temp_c",
+            "columnName": "temp_c",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wind_kph",
+            "columnName": "wind_kph",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "co",
+            "columnName": "co",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gb_defra_index",
+            "columnName": "gb_defra_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "no2",
+            "columnName": "no2",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "o3",
+            "columnName": "o3",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pm10",
+            "columnName": "pm10",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pm2_5",
+            "columnName": "pm2_5",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "so2",
+            "columnName": "so2",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "us_epa_index",
+            "columnName": "us_epa_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '49fe99f33cbdc7a7533f14152bc73d72')"
+    ]
+  }
+}
